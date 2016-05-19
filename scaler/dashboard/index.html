@@ -3,7 +3,7 @@
 <head profile="http://gmpg.org/xfn/11">
   <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 
-  <title>Shaker | The distributed data-plane testing tool for OpenStack</title>
+  <title>Scaler | The distributed data-plane testing tool for OpenStack</title>
 
   <!-- LIBS -->
 
@@ -40,7 +40,7 @@
 var report = {
   "scenarios": {
     "OpenStack L2 Performance": {
-      "file_name": "/home/ishakhat/Work/shaker/shaker/scenarios/openstack/perf_l2.yaml",
+      "file_name": "/home/ishakhat/Work/scaler/scaler/scenarios/openstack/perf_l2.yaml",
       "title": "OpenStack L2 Performance",
       "execution": {
         "tests": [{
@@ -62,7 +62,7 @@ var report = {
           "sla": ["[type == 'agent'] >> (stats.packets.avg > 100000)"]
         }]
       },
-      "description": "In this scenario Shaker launches 1 pair of instances in the same tenant network. Each instance is hosted on a separate compute node. The traffic goes within the tenant network (L2 domain).",
+      "description": "In this scenario Scaler launches 1 pair of instances in the same tenant network. Each instance is hosted on a separate compute node. The traffic goes within the tenant network (L2 domain).",
       "deployment": {
         "accommodation": ["pair", "single_room", {"compute_nodes": 2}],
         "template": "l2.hot"
@@ -87,11 +87,11 @@ var report = {
         "jitter": {"avg": 0.00190911, "unit": "ms"},
         "packets": {"max": 47430, "avg": 18526, "unit": "pps", "min": 3750}
       },
-      "verbose": "end:\n  cpu_utilization_percent:\n    host_system: 62.1244\n    host_total: 63.4323\n    host_user: 1.30787\n    remote_system: 32.4541\n    remote_total: 39.6685\n    remote_user: 7.21302\n  streams:\n  - udp:\n      bits_per_second: 4742670.0\n      bytes: 35570240\n      end: 60.0004\n      jitter_ms: 0.00190911\n      lost_packets: 379219\n      lost_percent: 34.1174\n      packets: 1111513\n      seconds: 60.0004\n      socket: 4\n      start: 0\n  sum:\n    bits_per_second: 4742670.0\n    bytes: 35570240\n    end: 60.0004\n    jitter_ms: 0.00190911\n    lost_packets: 379219\n    lost_percent: 34.1174\n    packets: 1111513\n    seconds: 60.0004\n    start: 0\nstart:\n  connected:\n  - local_host: 10.0.0.3\n    local_port: 44461\n    remote_host: 10.0.0.4\n    remote_port: 5201\n    socket: 4\n  connecting_to:\n    host: 10.0.0.4\n    port: 5201\n  cookie: shaker-oidtmu-master-0.1461598510.03\n  system_info: 'Linux shaker-oidtmu-master-0 3.13.0-85-generic #129-Ubuntu SMP Thu\n    Mar 17 20:50:15 UTC 2016 x86_64 x86_64 x86_64 GNU/Linux\n\n    '\n  test_start:\n    blksize: 32\n    blocks: 0\n    bytes: 0\n    duration: 60\n    num_streams: 1\n    omit: 0\n    protocol: UDP\n    reverse: 0\n  timestamp:\n    time: Mon, 25 Apr 2016 15:35:10 GMT\n    timesecs: 1461598510\n  version: iperf 3.0.7\n",
+      "verbose": "end:\n  cpu_utilization_percent:\n    host_system: 62.1244\n    host_total: 63.4323\n    host_user: 1.30787\n    remote_system: 32.4541\n    remote_total: 39.6685\n    remote_user: 7.21302\n  streams:\n  - udp:\n      bits_per_second: 4742670.0\n      bytes: 35570240\n      end: 60.0004\n      jitter_ms: 0.00190911\n      lost_packets: 379219\n      lost_percent: 34.1174\n      packets: 1111513\n      seconds: 60.0004\n      socket: 4\n      start: 0\n  sum:\n    bits_per_second: 4742670.0\n    bytes: 35570240\n    end: 60.0004\n    jitter_ms: 0.00190911\n    lost_packets: 379219\n    lost_percent: 34.1174\n    packets: 1111513\n    seconds: 60.0004\n    start: 0\nstart:\n  connected:\n  - local_host: 10.0.0.3\n    local_port: 44461\n    remote_host: 10.0.0.4\n    remote_port: 5201\n    socket: 4\n  connecting_to:\n    host: 10.0.0.4\n    port: 5201\n  cookie: scaler-oidtmu-master-0.1461598510.03\n  system_info: 'Linux scaler-oidtmu-master-0 3.13.0-85-generic #129-Ubuntu SMP Thu\n    Mar 17 20:50:15 UTC 2016 x86_64 x86_64 x86_64 GNU/Linux\n\n    '\n  test_start:\n    blksize: 32\n    blocks: 0\n    bytes: 0\n    duration: 60\n    num_streams: 1\n    omit: 0\n    protocol: UDP\n    reverse: 0\n  timestamp:\n    time: Mon, 25 Apr 2016 15:35:10 GMT\n    timesecs: 1461598510\n  version: iperf 3.0.7\n",
       "scenario": "OpenStack L2 Performance",
       "concurrency": 1,
       "schedule": 1461598509.995893,
-      "agent": "shaker_oidtmu_master_0",
+      "agent": "scaler_oidtmu_master_0",
       "id": "f97f71b5-9956-4962-8562-ae6a69455baf",
       "start": 1461598510.006365,
       "meta": [["time", "s"], ["packets", "pps"]],
@@ -149,11 +149,11 @@ var report = {
           "min": 383.90445709228516
         }, "retransmits": {"max": 44, "avg": 1, "unit": "", "min": 0}
       },
-      "verbose": "end:\n  cpu_utilization_percent:\n    host_system: 4.92556\n    host_total: 4.99918\n    host_user: 0.0736166\n    remote_system: 7.36826\n    remote_total: 7.5917\n    remote_user: 0.223431\n  streams:\n  - receiver:\n      bits_per_second: 574352000.0\n      bytes: 4307720472\n      end: 60.0011\n      seconds: 60.0011\n      socket: 4\n      start: 0\n    sender:\n      bits_per_second: 574629000.0\n      bytes: 4309799298\n      end: 60.0011\n      retransmits: 70\n      seconds: 60.0011\n      socket: 4\n      start: 0\n  sum_received:\n    bits_per_second: 574352000.0\n    bytes: 4307720472\n    end: 60.0011\n    seconds: 60.0011\n    start: 0\n  sum_sent:\n    bits_per_second: 574629000.0\n    bytes: 4309799298\n    end: 60.0011\n    retransmits: 70\n    seconds: 60.0011\n    start: 0\nstart:\n  connected:\n  - local_host: 10.0.0.3\n    local_port: 36940\n    remote_host: 10.0.0.4\n    remote_port: 5201\n    socket: 4\n  connecting_to:\n    host: 10.0.0.4\n    port: 5201\n  cookie: shaker-oidtmu-master-0.1461598429.52\n  system_info: 'Linux shaker-oidtmu-master-0 3.13.0-85-generic #129-Ubuntu SMP Thu\n    Mar 17 20:50:15 UTC 2016 x86_64 x86_64 x86_64 GNU/Linux\n\n    '\n  tcp_mss_default: 1398\n  test_start:\n    blksize: 131072\n    blocks: 0\n    bytes: 0\n    duration: 60\n    num_streams: 1\n    omit: 0\n    protocol: TCP\n    reverse: 0\n  timestamp:\n    time: Mon, 25 Apr 2016 15:33:49 GMT\n    timesecs: 1461598429\n  version: iperf 3.0.7\n",
+      "verbose": "end:\n  cpu_utilization_percent:\n    host_system: 4.92556\n    host_total: 4.99918\n    host_user: 0.0736166\n    remote_system: 7.36826\n    remote_total: 7.5917\n    remote_user: 0.223431\n  streams:\n  - receiver:\n      bits_per_second: 574352000.0\n      bytes: 4307720472\n      end: 60.0011\n      seconds: 60.0011\n      socket: 4\n      start: 0\n    sender:\n      bits_per_second: 574629000.0\n      bytes: 4309799298\n      end: 60.0011\n      retransmits: 70\n      seconds: 60.0011\n      socket: 4\n      start: 0\n  sum_received:\n    bits_per_second: 574352000.0\n    bytes: 4307720472\n    end: 60.0011\n    seconds: 60.0011\n    start: 0\n  sum_sent:\n    bits_per_second: 574629000.0\n    bytes: 4309799298\n    end: 60.0011\n    retransmits: 70\n    seconds: 60.0011\n    start: 0\nstart:\n  connected:\n  - local_host: 10.0.0.3\n    local_port: 36940\n    remote_host: 10.0.0.4\n    remote_port: 5201\n    socket: 4\n  connecting_to:\n    host: 10.0.0.4\n    port: 5201\n  cookie: scaler-oidtmu-master-0.1461598429.52\n  system_info: 'Linux scaler-oidtmu-master-0 3.13.0-85-generic #129-Ubuntu SMP Thu\n    Mar 17 20:50:15 UTC 2016 x86_64 x86_64 x86_64 GNU/Linux\n\n    '\n  tcp_mss_default: 1398\n  test_start:\n    blksize: 131072\n    blocks: 0\n    bytes: 0\n    duration: 60\n    num_streams: 1\n    omit: 0\n    protocol: TCP\n    reverse: 0\n  timestamp:\n    time: Mon, 25 Apr 2016 15:33:49 GMT\n    timesecs: 1461598429\n  version: iperf 3.0.7\n",
       "scenario": "OpenStack L2 Performance",
       "concurrency": 1,
       "schedule": 1461598429.510351,
-      "agent": "shaker_oidtmu_master_0",
+      "agent": "scaler_oidtmu_master_0",
       "id": "de73fb2d-5a97-4a05-afdc-f1273c5c0b90",
       "start": 1461598429.520625,
       "meta": [["time", "s"], ["bandwidth", "Mbit/s"], ["retransmits", ""]],
@@ -183,7 +183,7 @@ var report = {
       "scenario": "OpenStack L2 Performance",
       "concurrency": 1,
       "schedule": 1461598399.048448,
-      "agent": "shaker_oidtmu_master_0",
+      "agent": "scaler_oidtmu_master_0",
       "start": 1461598399.059337,
       "meta": [["time", "s"], ["ping_icmp", "ms"]],
       "command": {
@@ -254,7 +254,7 @@ var report = {
     }
   },
   "agents": {
-    "shaker_oidtmu_master_0": {
+    "scaler_oidtmu_master_0": {
       "node": "node-2.domain.tld",
       "slave": {
         "node": "node-3.domain.tld",
@@ -262,17 +262,17 @@ var report = {
         "availability_zone": "nova:node-3.domain.tld",
         "ip": "10.0.0.4",
         "mode": "slave",
-        "master_id": "shaker_oidtmu_master_0",
-        "id": "shaker_oidtmu_slave_0"
+        "master_id": "scaler_oidtmu_master_0",
+        "id": "scaler_oidtmu_slave_0"
       },
       "zone": "nova",
       "availability_zone": "nova:node-2.domain.tld",
       "ip": "10.0.0.3",
       "mode": "master",
-      "slave_id": "shaker_oidtmu_slave_0",
-      "id": "shaker_oidtmu_master_0"
+      "slave_id": "scaler_oidtmu_slave_0",
+      "id": "scaler_oidtmu_master_0"
     },
-    "shaker_oidtmu_slave_0": {
+    "scaler_oidtmu_slave_0": {
       "node": "node-3.domain.tld",
       "zone": "nova",
       "availability_zone": "nova:node-3.domain.tld",
@@ -283,12 +283,12 @@ var report = {
         "availability_zone": "nova:node-2.domain.tld",
         "ip": "10.0.0.3",
         "mode": "master",
-        "slave_id": "shaker_oidtmu_slave_0",
-        "id": "shaker_oidtmu_master_0"
+        "slave_id": "scaler_oidtmu_slave_0",
+        "id": "scaler_oidtmu_master_0"
       },
       "mode": "slave",
-      "master_id": "shaker_oidtmu_master_0",
-      "id": "shaker_oidtmu_slave_0"
+      "master_id": "scaler_oidtmu_master_0",
+      "id": "scaler_oidtmu_slave_0"
     }
   },
   "sla": [{
@@ -753,28 +753,28 @@ var report = {
 <body>
 
 <div class="container" id="container">
-  <div class="row text-center">
-    <h1>Shaker | The Report</h1>
+  <div class="row text-left">
+    <h1>Scaler <kbd>Ѫ</kbd> <small>performance tests execution report</small></h1>
   </div>
   <hr>
   <div class="row">
-    <div class="col-md-2">
+    <div class="col-md-3">
+      <label for="node_selector" title="Host / Compute node">Environment</label>
+      <select id="node_selector" class="form-control" data-placeholder="- Any environment -"></select>
+    </div>
+    <div class="col-md-3">
       <label for="scenario_selector" title="Scenario name">Scenario</label>
       <select id="scenario_selector" class="form-control" data-placeholder="- Any scenario -"></select>
     </div>
-    <div class="col-md-2">
-      <label for="test_selector" title="Test name">Test Case</label>
-      <select id="test_selector" class="form-control" data-placeholder="- Any test case -"></select>
+    <div class="col-md-3">
+      <label for="test_selector" title="Test name">Action</label>
+      <select id="test_selector" class="form-control" data-placeholder="- Any action -"></select>
     </div>
-    <div class="col-md-2">
-      <label for="concurrency_selector" title="Concurrency">Concurrency</label>
-      <select id="concurrency_selector" class="form-control" data-placeholder="- Any concurrency -"></select>
+    <div class="col-md-1">
+      <label for="concurrency_selector" title="Concurrency">Run #</label>
+      <select id="concurrency_selector" class="form-control" data-placeholder="- Any run -"></select>
     </div>
-    <div class="col-md-2">
-      <label for="node_selector" title="Host / Compute node">Host</label>
-      <select id="node_selector" class="form-control" data-placeholder="- Any node -"></select>
-    </div>
-    <div class="col-md-2">
+    <div class="col-md-2" style="display: none">
       <label for="agent_selector" title="Agent">Agent</label>
       <select id="agent_selector" class="form-control" data-placeholder="- Any agent -"></select>
     </div>
