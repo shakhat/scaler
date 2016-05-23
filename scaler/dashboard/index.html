@@ -162,9 +162,6 @@ var report = {
       var scenario_source_template = Handlebars.compile($("#scenario_source_template").html());
       var test_specification_template = Handlebars.compile($("#test_specification_template").html());
       var records_table_template = Handlebars.compile($("#records_table_template").html());
-      var executor_template = Handlebars.compile($("#executor_template").html());
-      var action_summary_template = Handlebars.compile($("#action_summary_template").html());
-//      var test_summary_template = Handlebars.compile($("#test_summary_template").html());
       var build_chart_template = Handlebars.compile($("#build_chart_template").html());
       var scenario_details_template = Handlebars.compile($("#scenario_details_template").html());
 
@@ -262,12 +259,6 @@ var report = {
       function showScenarioSource(contentArea, scenario) {
         contentArea.append(scenario_source_template(
             {data: jsyaml.safeDump(scenario)}));
-      }
-
-      function showTestSpecification(contentArea, test) {
-        contentArea.append(test_specification_template(
-            {data: jsyaml.safeDump(test)}
-        ))
       }
 
       function setToSortedList(theSet) {
@@ -395,116 +386,6 @@ var report = {
         });
       }
 
-      function showAgentRecord(contentArea, record) {
-        var chart_id = "chart_" + Math.round(Math.random() * 10000);
-        var ext_options = {
-          command_yaml: jsyaml.safeDump(record["command"]),
-          chart_id: chart_id};
-        if (record["stats"]) {
-          ext_options["stats_yaml"] = jsyaml.safeDump(record["stats"]);
-        }
-        contentArea.append(executor_template(
-            {record: $.extend({}, record, ext_options)}
-        ));
-        if (record["samples"]) {
-          var meta = record["meta"];
-          var axes = [];
-          axes[meta[1][0]] = 'y';
-          var axis = {
-            x: {label: concatenate(meta[0])},
-            y: {label: concatenate(meta[1]), min: 0}
-          };
-          if (meta.length > 2) {
-            axes[meta[2][0]] = 'y2';
-            axis['y2'] = {label: concatenate(meta[2]), min: 0, show: true}
-          }
-
-          var chart = [];
-          $.each(meta, function(_i, meta_item){  // row titles
-            chart.push([meta_item[0]]);
-          });
-          var samples = record["samples"];
-          for (var i=0; i < samples.length; i++) {
-            var point = samples[i];
-            for (var j=0; j < point.length; j++) {
-              chart[j].push(point[j]);
-            }
-          }
-
-          c3.generate({
-            bindto: "#" + chart_id,
-            data: {
-              x: 'time',
-              columns: chart,
-              axes: axes
-            },
-            axis: axis
-          });
-        }
-      }
-
-      function showActionSummary(contentArea, record) {
-        var chart_id = "chart_" + Math.round(Math.random() * 10000);
-        var environment_chart_id = "environment_chart_" + Math.round(Math.random() * 10000);
-        var ext_options = { chart_id: chart_id, environment_chart_id: environment_chart_id };
-        if (record["stats"]) {
-          ext_options["stats_yaml"] = jsyaml.safeDump(record["stats"]);
-        }
-        console.log(record);
-        contentArea.append(action_summary_template(
-            {record: $.extend({}, record, ext_options)}
-        ));
-        if (record["environment_chart"]) {
-          c3.generate({
-            bindto: "#" + environment_chart_id,
-            data: {
-              x: 'x',
-              columns: record["environment_chart"],
-              type: 'step',
-              order: null
-            },
-            axis: {
-              x: { type: 'category' }
-            }
-          });
-        }
-      }
-
-      function showTestSummary(contentArea, record) {
-        console.log(record);
-        var chart_id = "chart_" + Math.round(Math.random() * 10000);
-        var ext_options = { chart_id: chart_id };
-        if (record["stats"]) {
-          ext_options["stats_yaml"] = jsyaml.safeDump(record["stats"]);
-        }
-        contentArea.append(test_summary_template(
-            {record: $.extend({}, record, ext_options)}
-        ));
-        if (record["chart"]) {
-          var meta = record["meta"];
-          var axes = [];
-          axes[meta[1][0]] = 'y';
-          var axis = {
-            x: {label: concatenate(meta[0])},
-            y: {label: concatenate(meta[1]), min: 0}
-          };
-          if (meta.length > 2) {
-            axes[meta[2][0]] = 'y2';
-            axis['y2'] = {label: concatenate(meta[2]), min: 0, show: true}
-          }
-
-          c3.generate({
-            bindto: "#" + chart_id,
-            data: {
-              x: 'action',
-              columns: record["chart"],
-              axes: axes
-            },
-            axis: axis
-          });
-        }
-      }
-
       function makeURL(record, s) {
         var extra = {};
         extra[s] = record[s];
@@ -565,34 +446,6 @@ var report = {
         if (state["scenario"] != "") {
           showScenarioDetails(contentArea, filteredRecords)
         }
-
-//        if (state["scenario"] != "" && state["test"] != "" &&
-//                state["action"] != "" &&
-//                state["agent"] != "") {
-//          showAgentRecord(contentArea, filteredRecords[0]);
-//        }
-//        if (state["scenario"] != "" && state["test"] != "" &&
-//                state["action"] != "" && state["environment"] == "" &&
-//                state["agent"] == "") {
-//          var agg_recs = filterRecords(report.records, "action");
-//          if (agg_recs.length > 0) {
-//            showActionSummary(contentArea, agg_recs[0]);
-//          }
-//        }
-//        if (state["scenario"] != "" && state["test"] != "" &&
-//                state["action"] == "" && state["environment"] == "" &&
-//                state["agent"] == "") {
-//          var test_recs = filterRecords(report.records, "test");
-//          if (test_recs.length > 0) {
-//            showTestSummary(contentArea, test_recs[0]);
-//          }
-//        }
-//        if (state["test"] != "") {
-//          showTestSpecification(contentArea, report.tests[state["test"]]);
-//        }
-//        if (state["scenario"] != "") {
-//          showScenarioSource(contentArea, report.scenarios[state["scenario"]]);
-//        }
       }
 
       function parseUrlToState() {
@@ -689,47 +542,6 @@ var report = {
 <script id="test_specification_template" type="text/x-handlebars-template">
   <h3>Test Specification</h3>
   <pre>{{ data }}</pre>
-</script>
-
-<!-- Executor Result -->
-<script id="executor_template" type="text/x-handlebars-template">
-  <h3>Execution Summary</h3>
-  {{#with record}}
-  <div id="{{ chart_id }}"></div>
-  {{#if is_result_ok}}<span class="label label-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>success</span>{{/if}}
-  {{#if is_result_lost}}<span class="label label-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span>lost</span>{{/if}}
-  {{#if is_result_interrupted}}<span class="label label-warning"><span class="glyphicon glyphicon-stop" aria-hidden="true"></span>interrupted</span>{{/if}}
-  {{#if is_result_error}}<span class="label label-danger"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span>error</span>{{/if}}
-  {{#if stats_yaml}}
-    <h4>Stats</h4>
-    <pre>{{ stats_yaml }}</pre>
-  {{/if}}
-  <h4>Command</h4>
-  <pre>{{ command_yaml }}</pre>
-  {{#if stdout}}
-    <h4>Stdout</h4>
-    <pre>{{ stdout }}</pre>
-  {{/if}}
-  {{#if verbose}}
-    <h4>Verbose Info</h4>
-    <pre>{{ verbose }}</pre>
-  {{/if}}
-  {{#if stderr}}
-    <h4>Stderr</h4>
-    <pre>{{ stderr }}</pre>
-  {{/if}}
-  {{/with}}
-</script>
-
-<!-- Action summary -->
-<script id="action_summary_template" type="text/x-handlebars-template">
-  {{#with record}}
-  <div id="{{ chart_id  }}"></div>
-  <h3>Per-environment chart</h3>
-  <div id="{{ environment_chart_id  }}"></div>
-  <h3>Stats</h3>
-  <pre>{{ stats_yaml }}</pre>
-  {{/with}}
 </script>
 
 <!-- Build chart -->
