@@ -164,8 +164,9 @@ var report = {
       var records_table_template = Handlebars.compile($("#records_table_template").html());
       var executor_template = Handlebars.compile($("#executor_template").html());
       var action_summary_template = Handlebars.compile($("#action_summary_template").html());
-      var test_summary_template = Handlebars.compile($("#test_summary_template").html());
+//      var test_summary_template = Handlebars.compile($("#test_summary_template").html());
       var build_chart_template = Handlebars.compile($("#build_chart_template").html());
+      var scenario_details_template = Handlebars.compile($("#scenario_details_template").html());
 
       function concatenate(strings) {
         // returns strings concatenated via comma (like join() but omits empty strings)
@@ -269,6 +270,15 @@ var report = {
         ))
       }
 
+      function setToSortedList(theSet) {
+        var theList = [];
+        $.each(theSet, function(n, _v){
+          theList.push(n);
+        });
+        theList.sort();
+        return theList;
+      }
+
       function showBuildChart(contentArea, records) {
         var chart_id = "chart_" + Math.round(Math.random() * 10000);
         contentArea.append(build_chart_template(
@@ -292,11 +302,7 @@ var report = {
           }
         });
 
-        var builds = [];
-        $.each(buildSet, function(n, _v){
-          builds.push(n);
-        });
-        builds.sort();
+        var builds = setToSortedList(buildSet);
 
         var columns = [["build"], ["passed"], ["failed"]];
         $.each(builds, function(_i, build){
@@ -329,6 +335,63 @@ var report = {
               }
             }
           }
+        });
+      }
+
+      function showScenarioDetails(contentArea, records) {
+        var chart_id = "chart_" + Math.round(Math.random() * 10000);
+        var actionSet = {};
+        $.each(records, function(_i, record){
+          $.each(record.actions, function(action, _v){
+            actionSet[action] = true;
+          });
+        });
+        var actions = setToSortedList(actionSet);
+
+        var items = [];
+        $.each(actions, function(_i, action){
+          items.push({
+            action: action,
+            chart_id: chart_id + "_" + action
+          })
+        });
+
+        contentArea.append(scenario_details_template({items: items}));
+
+        $.each(actions, function(_i, action){
+
+          var unit = "";
+          var columns = [["build"], ["min"], ["avg"], ["max"]];
+          $.each(records, function(_i, record){
+            columns[0].push(record.build);
+            columns[1].push(record.actions[action].min);
+            columns[2].push(record.actions[action].avg);
+            columns[3].push(record.actions[action].max);
+            unit = record.actions[action].unit;
+          });
+
+          var label = action;
+          if (unit) {
+            label += ", " + unit
+          }
+
+          c3.generate({
+            bindto: "#" + chart_id + "_" + action,
+            data: {
+              x: 'build',
+              columns: columns
+            },
+            axis: {
+              x: {
+                label: "Build #",
+                type: "category"
+              },
+              y: {
+                min: 0,
+                label: label
+              }
+            }
+          });
         });
       }
 
@@ -498,6 +561,10 @@ var report = {
         }
 
         showRecordsTable(contentArea, filteredRecords);
+
+        if (state["scenario"] != "") {
+          showScenarioDetails(contentArea, filteredRecords)
+        }
 
 //        if (state["scenario"] != "" && state["test"] != "" &&
 //                state["action"] != "" &&
@@ -673,15 +740,16 @@ var report = {
   {{/with}}
 </script>
 
-<!-- Test summary -->
-<script id="test_summary_template" type="text/x-handlebars-template">
-  {{#with record}}
+<!-- Scenario details -->
+<script id="scenario_details_template" type="text/x-handlebars-template">
+  {{#items}}
+  <h3>{{ action }}</h3>
   <div id="{{ chart_id   }}"></div>
   {{#if stats_yaml}}
-    <h3>Stats</h3>
+    <h4>Stats</h4>
     <pre>{{ stats_yaml }}</pre>
   {{/if}}
-  {{/with}}
+  {{/items}}
 </script>
 
 <!-- Records Table -->
